@@ -43,7 +43,12 @@ client = boto3.client(
 # Start a conversation with the user message.
 default_message = "Say something nice about a beautiful sunny day"
 user_message1 = st.text_input("Enter your message to the LLM: ") 
-#"List in bullet points the parameters that are typically included in a urine strip test and how to interpret them. Use markdown as formatting language in your response."
+
+st.write("this app asks LLM to describe this image")
+st.image("img.jpeg")
+with open("img.jpeg", "rb") as f:
+    image = f.read()
+
 if user_message1:
     #st.write(user_message1)
     conversation = [
@@ -52,6 +57,8 @@ if user_message1:
             "content": [
                 {"text": default_message},
                 {"text": user_message1},
+                {"text": "describe the following image."},
+                {"image":{"format":"jpeg", "source":{"bytes": image}}}
             ],
             }
         ]
