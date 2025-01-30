@@ -41,27 +41,29 @@ client = boto3.client(
 )
 
 # Start a conversation with the user message.
-user_message = "List in bullet points the parameters that are typically included in a urine strip test and how to interpret them. Use markdown as formatting language in your response."
-st.write(user_message)
-conversation = [
-    {
-        "role": "user",
-        "content": [{"text": user_message}],
-        }
-    ]
-
-try:
-    # Send the message to the model, using a basic inference configuration.
-    response = client.converse(
-        modelId=model_id,
-        messages=conversation
-    )
-
-    # Extract and print the response text.
-    response_text = response["output"]["message"]["content"][0]["text"]
-    st.write(response_text)
-
-except (ClientError, Exception) as e:
-    st.write(f"ERROR: Can't invoke '{model_id}'. Reason: {e}")
-    exit(1)
-
+user_message =- st.text_input("Enter your message to the LLM: ") 
+#"List in bullet points the parameters that are typically included in a urine strip test and how to interpret them. Use markdown as formatting language in your response."
+if user_message is not None:
+    st.write(user_message)
+    conversation = [
+        {
+            "role": "user",
+            "content": [{"text": user_message}],
+            }
+        ]
+    
+    try:
+        # Send the message to the model, using a basic inference configuration.
+        response = client.converse(
+            modelId=model_id,
+            messages=conversation
+        )
+    
+        # Extract and print the response text.
+        response_text = response["output"]["message"]["content"][0]["text"]
+        st.write(response_text)
+    
+    except (ClientError, Exception) as e:
+        st.write(f"ERROR: Can't invoke '{model_id}'. Reason: {e}")
+        exit(1)
+    
