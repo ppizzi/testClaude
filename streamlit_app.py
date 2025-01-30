@@ -41,7 +41,7 @@ client = boto3.client(
 )
 
 # Start a conversation with the user message.
-user_message =- st.text_input("Enter your message to the LLM: ", "") 
+user_message = st.text_input("Enter your message to the LLM: ") 
 #"List in bullet points the parameters that are typically included in a urine strip test and how to interpret them. Use markdown as formatting language in your response."
 if user_message:
     st.write(user_message)
