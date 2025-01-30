@@ -50,8 +50,9 @@ if user_message1:
         {
             "role": "user",
             "content": [
-                {"text": default_message}],
-                {"text": user_message1}],
+                {"text": default_message},
+                {"text": user_message1},
+            ],
             }
         ]
 
