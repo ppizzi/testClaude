@@ -25,3 +25,43 @@ def encode_image(image):
 
 ####--- main page ---###
 st.title("Test your message to Claude API via Bedrock")
+
+#--Select model for inference
+# naming conventions: https://docs.aws.amazon.com/bedrock/latest/userguide/models-supported.html
+model_ids = ["us.anthropic.claude-3-5-sonnet-20240620-v1:0", "amazon.nova-lite-v1:0"]
+model_id = model_ids[0] 
+st.write("\(note: this app uses the following LLM model: ", model_id, "\)" )
+
+#--Create a Bedrock Runtime client in the AWS Region you want to use.
+client = boto3.client(
+    'bedrock-runtime',
+    aws_access_key_id=st.secrets["AWS_ACCESS_KEY_ID"],
+    aws_secret_access_key=st.secrets["AWS_SECRET_ACCESS_KEY"],
+    region_name=st.secrets["AWS_REGION"]
+)
+
+# Start a conversation with the user message.
+user_message = "List in bullet points the parameters that are typically included in a urine strip test and how to interpret them. Use markdown as formatting language in your response. Please respond in the following language: " + language + ". Finish the response with a line that states the LLM model provider."
+st.write(user_message)
+conversation = [
+    {
+        "role": "user",
+        "content": [{"text": user_message}],
+        }
+    ]
+
+try:
+    # Send the message to the model, using a basic inference configuration.
+    response = client.converse(
+        modelId=model_id,
+        messages=conversation
+    )
+
+    # Extract and print the response text.
+    response_text = response["output"]["message"]["content"][0]["text"]
+    st.write(response_text)
+
+except (ClientError, Exception) as e:
+    st.write(f"ERROR: Can't invoke '{model_id}'. Reason: {e}")
+    exit(1)
+
