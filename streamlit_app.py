@@ -41,16 +41,21 @@ client = boto3.client(
 )
 
 # Start a conversation with the user message.
-user_message = st.text_input("Enter your message to the LLM: ") 
+default_message = "Say something nice about a beautiful sunny day"
+user_message1 = st.text_input("Enter your message to the LLM: ") 
 #"List in bullet points the parameters that are typically included in a urine strip test and how to interpret them. Use markdown as formatting language in your response."
-if user_message:
-    st.write(user_message)
+if user_message1:
+    #st.write(user_message1)
     conversation = [
         {
             "role": "user",
-            "content": [{"text": user_message}],
+            "content": [
+                {"text": default_message}],
+                {"text": user_message1}],
             }
         ]
+
+    
     
     try:
         # Send the message to the model, using a basic inference configuration.
