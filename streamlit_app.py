@@ -41,7 +41,7 @@ client = boto3.client(
 )
 
 # Start a conversation with the user message.
-user_message = "List in bullet points the parameters that are typically included in a urine strip test and how to interpret them. Use markdown as formatting language in your response. Please respond in the following language: " + language + ". Finish the response with a line that states the LLM model provider."
+user_message = "List in bullet points the parameters that are typically included in a urine strip test and how to interpret them. Use markdown as formatting language in your response."
 st.write(user_message)
 conversation = [
     {
